@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Crea a tu personaje de sonic</title>
+</head>
+<body>
+    <header>
+        <h1><strong>encontrador y creador de personajes de sonic</strong></h1>
+    </header>
+
+    <section id="componente">
+        <aside>
+            <article class="p-3">
+                <h3>Selecciona un Personaje</h3>
+                <input type="text" v-model="busqueda" placeholder="Buscar por nombre">
+                
+                <ul>
+                    <li v-for="pj in personajes" 
+                        v-show="pj.nombre.toLowerCase().includes(busqueda.toLowerCase())" 
+                        @click="seleccionar(pj)">
+                        {{ pj.nombre }}
+                    </li>
+                </ul>
+                <hr>
+                <button @click="formulario = true" class="btn btn-primary w-100">Crear Nuevo</button>
+            </article>
+        </aside>
+
+        <main>
+            <article v-if="seleccion && !formulario" class="p-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img :src="seleccion.imagen" class="img-fluid rounded border shadow">
+                    </div>
+                    <div class="col-md-8">
+                        <h2 class="text-primary">{{ seleccion.nombre }}</h2>
+                        <p><strong>Especie</strong> {{ seleccion.especie }}</p>
+                        <p><strong>Habilidad:</strong> {{ seleccion.habilidad }}</p>
+                        <hr>
+                        <h3>Datos Curiosos:</h3>
+                        <ul>
+                            <li v-for="d in seleccion.datos" style="text-decoration: none; color: black; cursor: default;">
+                                {{ d }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+
+            <article v-if="formulario" class="p-4 border-warning border shadow">
+                <h4>Registrar</h4>
+                <input type="text" v-model="nuevoPj.nombre" placeholder="Nombre">
+                <input type="text" v-model="nuevoPj.especie" placeholder="Especie">
+                <input type="text" v-model="nuevoPj.habilidad" placeholder="Habilidad">
+
+                <div class="d-flex gap-2">
+                    <input type="text" v-model="datoT" placeholder="Escribe un dato curioso">
+                    <button @click="agregarDato" class="btn btn-sm btn-info" style="width: auto;">Añadir</button>
+                </div>
+
+                <ul class="mt-2">
+                    <li v-for="d in nuevoPj.datos" style="color: grey;">- {{ d }}</li>
+                </ul>
+
+                <button @click="guardarPj" class="btn btn-success mt-3">Guardar al Personaje</button>
+                <button @click="cancelarFormulario" class="btn btn-danger mt-3">Cancelar</button>
+            </article>
+        </main>
+    </section>
+
+    <script src="../js/Vuejs.js"></script>
+    <script src="../js/script.js"></script>
+  
+</body>
+</html>
